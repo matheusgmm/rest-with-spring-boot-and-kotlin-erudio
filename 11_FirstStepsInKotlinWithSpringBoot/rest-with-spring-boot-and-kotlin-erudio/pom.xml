@@ -21,6 +21,7 @@
 <!--		<junit.jupiter.version>5.8.2</junit.jupiter.version>-->
 <!--		<junit.platform.version>1.8.2</junit.platform.version>-->
 	</properties>
+
 	<dependencies>
 
 		<dependency>
@@ -54,9 +55,23 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+<!--		FLYWAY NÃO FUNCIONA NO MYSQL 5.6-->
+
+		<dependency>
 			<groupId>com.github.dozermapper</groupId>
 			<artifactId>dozer-core</artifactId>
-			<version>${dozer.version}</version>
+			<version>${dozer.version}</version> <!--USAR O MODELMAPPER EM VERSÕES MAIS RECENTES, NO LUGAR DO DOZER-->
 		</dependency>
 
 <!--		<dependency>-->
@@ -64,6 +79,7 @@
 <!--			<artifactId>modelmapper</artifactId>-->
 <!--			<version>3.0.0</version>-->
 <!--		</dependency>-->
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -102,6 +118,28 @@
 						<groupId>org.jetbrains.kotlin</groupId>
 						<artifactId>kotlin-maven-allopen</artifactId>
 						<version>${kotlin.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<configuration>
+					<url>jdbc:mysql://localhost:3306/rest_spring_boot_kotlin_erudio?useTimezone=true&amp;serverTimezone=UTC&amp;useSSL=false</url>
+					<user>root</user>
+					<password>root</password>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>com.mysql</groupId>
+						<artifactId>mysql-connector-j</artifactId>
+						<version>${mysql.version}</version>
+						<exclusions>
+							<exclusion>
+								<artifactId>slf4j-api</artifactId>
+								<groupId>org.slf4j</groupId>
+							</exclusion>
+						</exclusions>
 					</dependency>
 				</dependencies>
 			</plugin>
